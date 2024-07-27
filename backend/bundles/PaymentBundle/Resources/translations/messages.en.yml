@@ -1,0 +1,83 @@
+sylius:
+  form:
+    gateway_config:
+      type: Type
+    gateway_configuration:
+      paypal:
+        password: Password
+        signature: Signature
+        username: Username
+        sandbox: Sandbox
+      stripe:
+        publishable_key: Publishable key
+        secret_key: Secret key
+  payum_gateway_factory:
+    offline: Offline
+    paypal_express_checkout: Paypal express checkout
+    stripe_checkout: Stripe checkout
+  payum_action:
+    payment:
+      description: Payment contains %items% item for a total of %total%|Payment contains %items% items for a total of %total%
+
+
+# Payment CRUD generated at 2018-12-20 03:58:13
+dentiman.paymentbundle.payment.id.label: Id
+dentiman.paymentbundle.payment.number.label: Number
+dentiman.paymentbundle.payment.description.label: Description
+dentiman.paymentbundle.payment.clientemail.label: Clientemail
+dentiman.paymentbundle.payment.clientid.label: Clientid
+dentiman.paymentbundle.payment.totalamount.label: Totalamount
+dentiman.paymentbundle.payment.currencycode.label: Currencycode
+dentiman.paymentbundle.payment.entity_label: Payment
+dentiman.paymentbundle.payment.entity_plural_label: Payments
+dentiman.paymentbundle.payment.controller.saved.message: Payments saved
+dentiman.paymentbundle.payment.owner.label: Owner
+
+# Gatewayconfig CRUD generated at 2019-07-27 10:56:55
+dentiman.paymentbundle.gatewayconfig.id.label: Id
+dentiman.paymentbundle.gatewayconfig.factoryname.label: Factoryname
+dentiman.paymentbundle.gatewayconfig.gatewayname.label: Gatewayname
+dentiman.paymentbundle.gatewayconfig.decryptedconfig.label: Decryptedconfig
+dentiman.paymentbundle.gatewayconfig.entity_label: Gatewayconfig
+dentiman.paymentbundle.gatewayconfig.entity_plural_label: Gatewayconfigs
+dentiman.paymentbundle.gatewayconfig.controller.saved.message: Gatewayconfigs saved
+dentiman.paymentbundle.gatewayconfig.owner.label: Owner
+app:
+    entity:
+        service:
+            singular: Service
+            plural: Services
+            action: { create: 'Create Service', delete: 'Delete Service' }
+            saved_message: 'Service saved'
+            id: Id
+            name: Name
+            isEnabled: IsEnabled
+            code: Code
+        order_item:
+            singular: Order Item
+            plural: Order Items
+            action:
+                create: 'Create Order Item'
+                delete: 'Delete Order Item'
+            saved_message: 'Order Item saved'
+            id: Id
+            name: Name
+            price: Price
+            expiration: Expiration
+            isEnabled: IsEnabled
+        order:
+            singular: Order
+            plural: Orders
+            action:
+                create: 'Create Order'
+                delete: 'Delete Order'
+            saved_message: 'Order saved'
+            id: Id
+            total: Total
+            createdAt: CreatedAt
+            status: Status
+            fulfilledAt: FulfilledAt
+            invoiceNumber: InvoiceNumber
+            capture_warning:
+              payed_success: Order has been captured successfully!
+              only_new_order: You order has already been payed or caneled

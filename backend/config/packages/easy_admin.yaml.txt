@@ -1,0 +1,230 @@
+easy_admin:
+    user:
+        display_name: true
+        display_avatar: false
+        name_property_path: 'username'
+    site_name: 'Admin'
+    entities:
+        ScheduleLog:
+            class:  Dentiman\ScheduleBundle\Entity\ScheduleLog
+            actions: ['show','-edit','-delete','-new']
+            list:
+                filters:
+                    - property: 'date'
+                      type: 'App\Form\Filter\DateFilterType'
+                      mapped: false
+                sort: 'startedAt'
+                actions: ['show','-edit','-delete','-new']
+                fields:
+                    - { property: 'schedule' }
+                    - { property: 'message' }
+                    - { property: 'duration' }
+                    - { property: 'startedAt' }
+                    - { property: 'isSuccess' }
+        MainTickers:
+            class:  App\Entity\Feed\MainTickers
+        MainLevel1:
+            class:  App\Entity\Feed\MainLevel1
+            list:
+              fields:
+                - { property: 'id' }
+                - { property: 'price' }
+                - { property: 'ch' }
+                - { property: 'chp' }
+                - { property: 'vol' }
+                - { property: 'ttime' }
+        MainEarnings:
+            class:  App\Entity\Feed\MainEarnings
+        MainPremarket:
+            class:  App\Entity\Feed\MainPremarket
+        MainMinutePrev:
+            class:  App\Entity\Feed\MainMinutePrev
+        MainWeek:
+            class:  App\Entity\Feed\MainWeek
+        MainTech:
+            class:  App\Entity\Feed\MainTech
+        MainTmp:
+            class:  App\Entity\Feed\MainTmp
+        MainGrid:
+            class:  App\Entity\Feed\MainGrid
+            list:
+              fields:
+                - { property: 'id' }
+                - { property: 'price' }
+                - { property: 'ch' }
+                - { property: 'chp' }
+                - { property: 'vol' }
+                - { property: 'ttime' }
+                - { property: 'atr' }
+                - { property: 'sector' }
+        MainGridDelay:
+            class:  App\Entity\Feed\MainGridDelay
+        FeedLevel1Sources:
+            class:  App\Entity\FeedImport\Level1\FeedLevel1Sources
+        FeedLevel1Finviz:
+            class:  App\Entity\FeedImport\Level1\FeedLevel1Finviz
+        FeedBasicTickers:
+            class:  App\Entity\FeedImport\Basic\FeedBasicTickers
+        FeedBasicFinviz:
+            class:  App\Entity\FeedImport\Basic\FeedBasicFinviz
+        FeedBasicEarnings:
+            class:  App\Entity\FeedImport\Basic\FeedBasicEarnings
+        FeedPremarketIqfeed:
+            class:  App\Entity\FeedImport\Premarket\FeedPremarketIqfeed
+        FeedYahooQuote:
+            class:  App\Entity\FeedImport\Basic\FeedYahooQuote
+        Schedule:
+            show:
+                fields:
+                    - { property: 'command', label: 'command'  }
+                    - { property: 'logs', label: '', type: embedded_list    }
+            edit:
+              fields:
+                - { property: 'command'  }
+                - { property: 'definition' }
+            actions:
+                -   name: 'schedule_run_command'
+                    type: 'route'
+                    label: 'Run'
+                    css_class: 'btn btn-info'
+                    icon: 'check'
+            class:  Dentiman\ScheduleBundle\Entity\Schedule
+            list:
+                actions:
+                    - { name: 'show', label: 'show' }
+                    - name: 'schedule_run_command'
+                      type: 'route'
+                      label: 'Run'
+                      css_class: 'btn btn-info'
+                      icon: 'check'
+                fields:
+                    - { property: 'command'}
+                    - { property: 'definition'}
+#                    - { property: 'arguments'}
+                    - { property: 'isEnabled'}
+        GatewayConfig:
+            class: Dentiman\PaymentBundle\Entity\GatewayConfig
+            form:
+                type: Dentiman\PaymentBundle\Form\Type\GatewayConfigType
+        Payment:
+            class: Dentiman\PaymentBundle\Entity\Payment
+            list:
+                actions: ['show']
+                fields:
+                    - { property: 'id', label: 'ID' }
+                    - { property: 'number', label: 'number'}
+                    - { property: 'relatedOrder', label: 'order' }
+                    - { property: 'status', label: 'Status'}
+                    - { property: 'totalAmount', label: 'totalAmount'}
+                    - { property: 'createdAt', label: 'Date'}
+            disabled_actions: ['edit','delete']
+        Notify:
+            class: Dentiman\PaymentBundle\Entity\Notify
+            list:
+                actions: ['show']
+            disabled_actions: ['edit']
+        Order:
+            class: Dentiman\PaymentBundle\Entity\Order
+            list:
+                fields:
+                    - { property: 'owner'}
+                    - { property: 'status'}
+                    - { property: 'processed', type: boolean}
+                    - { property: 'createdAt'}
+        ServiceVariant:
+            class: Dentiman\PaymentBundle\Entity\ServiceVariant
+        Service:
+            class: Dentiman\PaymentBundle\Entity\Service
+            form:
+                fields:
+                    - property: 'name'
+                      type: 'text'
+                      type_options:
+                          label: Name
+                    - property: 'isEnabled'
+                    - property: 'code'
+                      type: 'text'
+                      type_options:
+                          required: false
+        TickerTaskDailyCharts:
+            actions: ['show','-edit','-delete','-new']
+            class:  App\Entity\FeedImport\Charts\TickerTaskDailyCharts
+            show:
+              fields:
+                - { property: 'message', label: 'message'  }
+                - { property: 'dailyHistories', label: '', type: embedded_list    }
+            list:
+                actions: ['show','-edit','-delete','-new']
+                fields:
+                    - { property: 'id'}
+                    - { property: 'done', type: boolean}
+                    - { property: 'success', type: boolean}
+                    - { property: 'updatedAt'}
+                    - { property: 'dailyHistories'}
+                    - { property: 'message'}
+                    - { property: 'attempt'}
+        IntradayCounter:
+            class:  App\Entity\FeedImport\Charts\IntradayCounter
+        DailyHistory:
+            class:  App\Entity\FeedImport\Charts\DailyHistory
+            list:
+                filters:
+                    - property: 'custom'
+                      type: 'App\Form\Filter\DailyHistoryFilterType'
+                      mapped: false
+
+        User:
+            class: App\Entity\User
+        ScreenerFilters:
+            class: App\Entity\Presets\ScreenerFilter
+        PanelLayout:
+            class: App\Entity\Presets\PanelLayout
+    design:
+        menu:
+            - label: 'Cron'
+              children:
+                - { entity: 'Schedule', label: 'Schedule' }
+                - { entity: 'ScheduleLog', label: 'ScheduleLog' }
+            - label: 'Billing'
+              children:
+                - { entity: 'Order', label: 'Order' }
+                - { entity: 'Payment', label: 'Payment' }
+                - { entity: 'Notify', label: 'Notify' }
+                - { entity: 'ServiceVariant', label: 'ServiceVariant' }
+                - { entity: 'Service', label: 'Service' }
+                - { entity: 'GatewayConfig', label: 'GatewayConfig' }
+
+            - label: 'Charts'
+              children:
+                - { entity: 'DailyHistory', label: 'DailyHistory' }
+                - { entity: 'IntradayCounter', label: 'IntradayCounter' }
+                - { entity: 'TickerTaskDailyCharts', label: 'TickerTaskDailyCharts' }
+            - label: 'Grids'
+              children:
+                - { entity: 'MainGrid', label: 'MainGrid' }
+                - label: 'MainTickers'
+                - { entity: 'MainTickers', label: 'MainTickers' }
+                - { entity: 'FeedBasicTickers', label: 'FeedBasicTickers' }
+                - label: 'MainLevel1'
+                - { entity: 'MainLevel1', label: 'MainLevel1' }
+                - { entity: 'FeedLevel1Sources', label: 'FeedLevel1Sources' }
+                - label: 'MainEarnings'
+                - { entity: 'MainEarnings', label: 'MainEarnings' }
+                - { entity: 'FeedBasicEarnings', label: 'FeedBasicEarnings' }
+                - label: 'MainPremarket'
+                - { entity: 'MainPremarket', label: 'MainPremarkets' }
+                - { entity: 'FeedPremarketIqfeed', label: 'FeedPremarketIqfeed' }
+
+                - { label: 'Other Feed' }
+                - { entity: 'MainTech', label: 'MainTech' }
+                - { entity: 'MainTmp', label: 'MainTmp' }
+                - { entity: 'MainWeek', label: 'MainWeek' }
+                - { entity: 'MainMinutePrev', label: 'MainMinutePrev' }
+
+                - { entity: 'FeedYahooQuote', label: 'FeedYahooQuote' }
+
+
+            - { label: 'User' }
+            - { entity: 'User', label: 'User' }
+            - { entity: 'ScreenerFilters', label: 'ScreenerFilters' }
+            - { entity: 'PanelLayout', label: 'PanelLayout' }

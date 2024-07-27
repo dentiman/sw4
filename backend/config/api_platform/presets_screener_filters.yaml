@@ -1,0 +1,29 @@
+resources:
+  App\Entity\Presets\ScreenerFilter:
+    collectionOperations:
+      get:
+        order:
+          id: DESC
+      post: ~
+    itemOperations:
+      get:
+        method: 'GET'
+        security: 'is_granted("ROLE_ADMIN") or object.getOwner() == user'
+        security_message: 'Sorry, but you are not the filter owner.'
+      delete:
+        method: 'DELETE'
+        security: 'is_granted("ROLE_ADMIN") or object.getOwner() == user'
+        security_message: 'Sorry, but you are not the filter owner.'
+      patch: ~
+      put:
+        method: 'PUT'
+        security: 'is_granted("ROLE_ADMIN") or object.getOwner() == user'
+        security_message: 'Sorry, but you are not the filter owner.'
+    attributes:
+      security: 'is_granted("ROLE_USER")'
+      pagination_items_per_page: 25
+      normalization_context:
+        skip_null_values: false
+        groups: ['crud']
+      denormalization_context:
+        groups: ['crud']

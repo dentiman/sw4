@@ -1,0 +1,12 @@
+App\Entity\Presets\PanelLayout:
+  attributes:
+    name:
+      groups: ['crud']
+    displayFeedFields:
+      groups: ['crud']
+    chartOne:
+      groups: ['crud']
+    chartTwo:
+      groups: ['crud']
+    chartThree:
+      groups: ['crud']

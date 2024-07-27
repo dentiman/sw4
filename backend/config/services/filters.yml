@@ -1,0 +1,119 @@
+services:
+#  main_grid.regexp_filter:
+#    class: App\ApiPlatform\Filter\RegexpFilter
+#    arguments: [ '@doctrine', ~, '@?logger', { level: ~ } ]
+#    tags:  [ 'api_platform.filter' ]
+  main_grid.range_filter:
+    parent: 'api_platform.doctrine.orm.range_filter'
+    arguments:
+      - averageDailyVolume10Day: ~
+        averageDailyVolume3Month: ~
+        fiftyDayAverage: ~
+        fiftyDayAverageChange: ~
+        fiftyDayAverageChangePercent: ~
+        twoHundredDayAverage: ~
+        twoHundredDayAverageChange: ~
+        twoHundredDayAverageChangePercent: ~
+        fiftyTwoWeekHigh: ~
+        fiftyTwoWeekHighChange: ~
+        fiftyTwoWeekHighChangePercent: ~
+        fiftyTwoWeekLow: ~
+        fiftyTwoWeekLowChange: ~
+        fiftyTwoWeekLowChangePercent: ~
+        forwardPE: ~
+        marketCap: ~
+        sharesOutstanding: ~
+#        trailingAnnualDividendRate: ~
+#        trailingAnnualDividendYield: ~
+#        trailingPE: ~
+#MainTmpTrait: ~
+        atr: ~
+#  Level1: ~
+        price: ~
+        op: ~
+        hi: ~
+        lo: ~
+        chp: ~
+        ch: ~
+        bid: ~
+        ask: ~
+        bidsize: ~
+        asksize: ~
+        tcount: ~
+        vol: ~
+#  Premarket: ~
+        pvol: ~
+        ptcount: ~
+        pprice: ~
+        pchp: ~
+        pch: ~
+#  CalculateTrrait: ~
+        relativeVolume: ~
+        gep: ~
+        priceRange: ~
+        chpo: ~
+        cho: ~
+        atrp: ~
+        newHigh: ~
+        newLow: ~
+        index: ~
+        spread: ~
+    tags:  [ 'api_platform.filter' ]
+  main_grid.earning_date_filter:
+    parent: 'api_platform.doctrine.orm.date_filter'
+    arguments: [ { earn: ~, ipo: ~ } ]
+    tags:  [ 'api_platform.filter' ]
+  main_grid.numeric_filter:
+    parent: 'api_platform.doctrine.orm.numeric_filter'
+    arguments: [ { exchange: ~, level: ~ } ]
+    tags:  [ 'api_platform.filter' ]
+  main_grid.search_filter:
+    parent: 'api_platform.doctrine.orm.search_filter'
+    arguments: [ { ind: ~, country: ~, id: ~, sector: ~, etf: ~, earntime: ~ } ]
+    tags:  [ 'api_platform.filter' ]
+  main_grid.ticker_filter:
+    parent: 'api_platform.doctrine.orm.search_filter'
+    arguments: [ { id: start } ]
+    tags: [ 'api_platform.filter' ]
+  main_grid.order_filter:
+    parent: 'api_platform.doctrine.orm.order_filter'
+    arguments:
+      - averageDailyVolume10Day: ~
+        averageDailyVolume3Month: ~
+        id: ~
+        marketCap: ~
+        sharesOutstanding: ~
+        #MainTmpTrait: ~
+        atr: ~
+        #  Level1: ~
+        price: ~
+        chp: ~
+        ch: ~
+        bidsize: ~
+        asksize: ~
+        tcount: ~
+        vol: ~
+        #  Premarket: ~
+        pvol: ~
+        ptcount: ~
+        pprice: ~
+        pchp: ~
+        pch: ~
+        #  CalculateTrrait: ~
+        relativeVolume: ~
+        gep: ~
+        priceRange: ~
+        chpo: ~
+        cho: ~
+        atrp: ~
+        newHigh: ~
+        newLow: ~
+        exchange: ~
+    tags:      [ 'api_platform.filter' ]
+    autowire: false
+    autoconfigure: false
+    public: false
+  createdAt.date_filter:
+    parent: 'api_platform.doctrine.orm.date_filter'
+    arguments: [ { createdAt: ~ } ]
+    tags:  [ 'api_platform.filter' ]

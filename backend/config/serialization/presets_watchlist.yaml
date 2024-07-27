@@ -1,0 +1,14 @@
+App\Entity\Presets\Watchlist:
+  attributes:
+    name:
+      groups: ['crud']
+    createdAt:
+      groups: ['crud']
+    continueAt:
+      groups: ['crud']
+    green:
+      groups: ['crud']
+    red:
+      groups: ['crud']
+    blue:
+      groups: ['crud']

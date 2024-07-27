@@ -1,0 +1,16 @@
+resources:
+  App\Entity\Feed\MainTickers:
+    collectionOperations:
+      get:
+        path: /ticker
+        filters:
+          - 'main_grid.ticker_filter'
+    itemOperations:
+      get: ~
+    attributes:
+      pagination_items_per_page: 25
+      normalization_context:
+        skip_null_values: false
+        groups: ['read','profile-read']
+      denormalization_context:
+        groups: []

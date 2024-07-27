@@ -1,0 +1,450 @@
+price:
+  filterGroup: 1
+  filterType: 1
+  formula: 0
+  operator: 1
+  valueType: "Price"
+  order1: 1
+  choices: "PRICE"
+chp:
+  filterGroup: 1
+  filterType: 1
+  formula: 0
+  operator: 2
+  valueType: "Percent"
+  order1: 5
+  choices: "CHANGE"
+ch:
+  filterGroup: 1
+  filterType: 1
+  formula: 0
+  operator: 2
+  valueType: "Net"
+  order1: 9
+  choices: "CHANGED"
+vol:
+  filterGroup: 1
+  filterType: 1
+  formula: 0
+  operator: 1
+  valueType: "Volume"
+  order1: 6
+  choices: "VOLUME"
+avvo:
+  filterGroup: 1
+  filterType: 1
+  formula: 0
+  operator: 1
+  valueType: "Volume"
+  order1: 2
+  choices: "AVVO"
+revol:
+  filterGroup: 1
+  filterType: 2
+  formula: "(CASE WHEN b.avvo=0 THEN 0 ELSE (l.vol/1000)/b.avvo END)"
+  operator: 1
+  valueType: "Revol"
+  order1: 10
+  choices: "RELATIVE_VOL"
+atr:
+  filterGroup: 1
+  filterType: 1
+  formula: 0
+  operator: 2
+  valueType: "Price"
+  order1: 3
+  choices: "ATR"
+mc:
+  filterGroup: 1
+  filterType: 1
+  formula: 0
+  operator: 1
+  valueType: "Mln"
+  order1: 4
+  choices: "MARKET_CAP"
+exchange:
+  filterGroup: 1
+  filterType: 1
+  formula: 0
+  operator: 3
+  valueType: "Exchange"
+  order1: 12
+  choices: "EXCHANGE"
+sector:
+  filterGroup: 1
+  filterType: 1
+  formula: 0
+  operator: 3
+  valueType: "Sector"
+  order1: 13
+  choices: "SECTOR"
+ind:
+  filterGroup: 1
+  filterType: 1
+  formula: 0
+  operator: 2
+  valueType: "Text"
+  order1: 15
+  choices: "INDUSTRY"
+etf:
+  filterGroup: 1
+  filterType: 2
+  formula: "(CASE WHEN b.ind IN('Closed-End Fund - Debt','Closed-End Fund - Equity','Closed-End Fund - Foreign','Exchange Traded Fund') THEN 1 ELSE 2 END)"
+  operator: 2
+  valueType: "Dig"
+  order1: 16
+  choices: "ETF"
+gep:
+  filterGroup: 1
+  filterType: 2
+  formula: "(CASE WHEN l.op=0 THEN 0 WHEN l.ch=0 THEN 0 ELSE l.op/(l.price-l.ch)*100-100 END)"
+  operator: 2
+  valueType: "Percent"
+  order1: 7
+  choices: "CHANGE"
+index:
+  filterGroup: 1
+  filterType: 1
+  formula: 0
+  operator: 2
+  valueType: "Index"
+  order1: 8
+  choices: "INDEX"
+name:
+  filterGroup: 2
+  filterType: 1
+  formula: 0
+  operator: 0
+  valueType: "Text"
+  order1: 0
+  choices: ""
+country:
+  filterGroup: 1
+  filterType: 1
+  formula: 0
+  operator: 2
+  valueType: "Text"
+  order1: 11
+  choices: "COUNTRY"
+range:
+  filterGroup: 3
+  filterType: 2
+  formula: "(CASE WHEN l.lo=0 THEN 0 WHEN l.hi=0 THEN 0 ELSE l.hi-l.lo END)"
+  operator: 2
+  valueType: "Price"
+  order1: 1
+  choices: "ATR"
+chpo:
+  filterGroup: 3
+  filterType: 2
+  formula: "(CASE WHEN maingrid.op=0 THEN 0 ELSE (maingrid.price/maingrid.op)*100-100 END)"
+  operator: 2
+  valueType: "Percent"
+  order1: 2
+  choices: "CHANGE"
+cho:
+  filterGroup: 3
+  filterType: 2
+  formula: "(CASE WHEN l.op=0 THEN 0 ELSE l.price-l.op END)"
+  operator: 2
+  valueType: "Net"
+  order1: 3
+  choices: "CHANGED"
+pprice:
+  filterGroup: 7
+  filterType: 1
+  formula: 0
+  operator: 1
+  valueType: "Price"
+  order1: 1
+  choices: "PRICE"
+pchp:
+  filterGroup: 7
+  filterType: 1
+  formula: 0
+  operator: 2
+  valueType: "Percent"
+  order1: 2
+  choices: "CHANGE"
+pch:
+  filterGroup: 7
+  filterType: 1
+  formula: 0
+  operator: 2
+  valueType: "Net"
+  order1: 3
+  choices: "CHANGED"
+pvol:
+  filterGroup: 7
+  filterType: 1
+  formula: 0
+  operator: 1
+  valueType: "Volume"
+  order1: 4
+  choices: "VOLUME"
+ptcount:
+  filterGroup: 7
+  filterType: 1
+  formula: 0
+  operator: 2
+  valueType: "Volume"
+  order1: 5
+  choices: "TRADE_COUNT"
+ipo:
+  filterGroup: 2
+  filterType: 1
+  formula: 0
+  operator: 4
+  valueType: "Date"
+  order1: 0
+  choices: ""
+pw:
+  filterGroup: 3
+  filterType: 1
+  formula: 0
+  operator: 2
+  valueType: "Percent"
+  order1: 4
+  choices: "CHANGE"
+pq:
+  filterGroup: 3
+  filterType: 1
+  formula: 0
+  operator: 2
+  valueType: "Percent"
+  order1: 5
+  choices: "CHANGE"
+pm:
+  filterGroup: 3
+  filterType: 1
+  formula: 0
+  operator: 2
+  valueType: "Percent"
+  order1: 6
+  choices: "CHANGE"
+ph:
+  filterGroup: 3
+  filterType: 1
+  formula: 0
+  operator: 2
+  valueType: "Percent"
+  order1: 7
+  choices: "CHANGE"
+py:
+  filterGroup: 3
+  filterType: 1
+  formula: 0
+  operator: 2
+  valueType: "Percent"
+  order1: 8
+  choices: "CHANGE"
+hi50pc:
+  filterGroup: 3
+  filterType: 1
+  formula: 0
+  operator: 1
+  valueType: "Percent"
+  order1: 10
+  choices: "PERCENT"
+lo50pc:
+  filterGroup: 3
+  filterType: 1
+  formula: 0
+  operator: 1
+  valueType: "Percent"
+  order1: 12
+  choices: "PERCENT"
+hi52pc:
+  filterGroup: 3
+  filterType: 1
+  formula: 0
+  operator: 1
+  valueType: "Percent"
+  order1: 14
+  choices: "PERCENT"
+lo52pc:
+  filterGroup: 3
+  filterType: 1
+  formula: 0
+  operator: 1
+  valueType: "Percent"
+  order1: 16
+  choices: "PERCENT"
+sma20pc:
+  filterGroup: 3
+  filterType: 1
+  formula: 0
+  operator: 1
+  valueType: "Percent"
+  order1: 18
+  choices: "PERCENT"
+sma50pc:
+  filterGroup: 3
+  filterType: 1
+  formula: 0
+  operator: 1
+  valueType: "Percent"
+  order1: 20
+  choices: "PERCENT"
+sma200pc:
+  filterGroup: 3
+  filterType: 1
+  formula: 0
+  operator: 1
+  valueType: "Percent"
+  order1: 22
+  choices: "PERCENT"
+atrp:
+  filterGroup: 3
+  filterType: 2
+  formula: "(CASE WHEN b.atr=0 THEN 0 ELSE ((l.hi-l.lo)/b.atr)*100-100 END)"
+  operator: 2
+  valueType: "Percent"
+  order1: 24
+  choices: "ATR_PERCENT"
+pe:
+  filterGroup: 4
+  filterType: 1
+  formula: 0
+  operator: 2
+  valueType: "Dig"
+  order1: 0
+  choices: "PE"
+aut:
+  filterGroup: 4
+  filterType: 1
+  formula: 0
+  operator: 1
+  valueType: "Mln"
+  order1: 0
+  choices: "AUT"
+fpe:
+  filterGroup: 4
+  filterType: 1
+  formula: 0
+  operator: 2
+  valueType: "Dig"
+  order1: 0
+  choices: "PE"
+fshort:
+  filterGroup: 4
+  filterType: 1
+  formula: 0
+  operator: 2
+  valueType: "Percent"
+  order1: 0
+  choices: "FLOAT_SHORT"
+sfloat:
+  filterGroup: 4
+  filterType: 1
+  formula: 0
+  operator: 1
+  valueType: "Mln"
+  order1: 0
+  choices: "AUT"
+insider:
+  filterGroup: 4
+  filterType: 1
+  formula: 0
+  operator: 1
+  valueType: "Percent"
+  order1: 0
+  choices: "PLUS_PERCENT"
+shratio:
+  filterGroup: 4
+  filterType: 1
+  formula: 0
+  operator: 2
+  valueType: "Dig"
+  order1: 0
+  choices: "SHORT_RATIO"
+earnf:
+  filterGroup: 5
+  filterType: 0
+  formula: 0
+  operator: 7
+  valueType: "Dig"
+  order1: 1
+  choices: "EARNING_DATE"
+earn:
+  filterGroup: 5
+  filterType: 1
+  formula: 0
+  operator: 4
+  valueType: "Date"
+  order1: 2
+  choices: ""
+earntime:
+  filterGroup: 5
+  filterType: 1
+  formula: 0
+  operator: 2
+  valueType: "Text"
+  order1: 3
+  choices: "EARNING_TIME"
+hi:
+  filterGroup: 6
+  filterType: 1
+  formula: 0
+  operator: 0
+  valueType: "Price"
+  order1: 0
+  choices: ""
+lo:
+  filterGroup: 6
+  filterType: 1
+  formula: 0
+  operator: 0
+  valueType: "Price"
+  order1: 0
+  choices: ""
+op:
+  filterGroup: 6
+  filterType: 1
+  formula: 0
+  operator: 0
+  valueType: "Price"
+  order1: 0
+  choices: ""
+ask:
+  filterGroup: 6
+  filterType: 1
+  formula: 0
+  operator: 1
+  valueType: "Price"
+  order1: 0
+  choices: "PRICE"
+bid:
+  filterGroup: 6
+  filterType: 1
+  formula: 0
+  operator: 1
+  valueType: "Price"
+  order1: 0
+  choices: "PRICE"
+spread:
+  filterGroup: 6
+  filterType: 2
+  formula: "(l.ask-l.bid)"
+  operator: 2
+  valueType: "Price"
+  order1: 0
+  choices: "SPREAD"
+asksize:
+  filterGroup: 6
+  filterType: 1
+  formula: 0
+  operator: 1
+  valueType: "Volume"
+  order1: 0
+  choices: "SIZE"
+bidsize:
+  filterGroup: 6
+  filterType: 1
+  formula: 0
+  operator: 1
+  valueType: "Volume"
+  order1: 0
+  choices: "SIZE"
+
+

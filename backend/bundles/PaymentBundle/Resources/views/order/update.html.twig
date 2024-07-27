@@ -1,0 +1,61 @@
+{% extends 'OroUIBundle:actions:update.html.twig' %}
+{% form_theme form with 'OroFormBundle:Form:fields.html.twig' %}
+{% import 'OroUIBundle::macros.html.twig' as UI %}
+{% set Order = form.vars.value %}
+
+{% if Order.id %}
+    {% oro_title_set({params : {"%label%": Order.id }}) %}
+    {% set formAction = path('dentiman_paymentbundle_order_update', { 'id': Order.id }) %}
+{% else %}
+    {% oro_title_set({params : {"%entityName%": 'app.entity.order.singular'|trans }}) %}
+    {% set formAction = path('dentiman_paymentbundle_order_create') %}
+{% endif %}
+
+{% block navButtons %}
+    {{ UI.cancelButton(path('dentiman_paymentbundle_order_index')) }}
+    {{ UI.dropdownSaveButton({
+    'html':UI.saveAndCloseButton({
+            'route': 'dentiman_paymentbundle_order_view',
+            'params': {'id': '$id'}
+        })
+    }) }}
+
+
+{% endblock navButtons %}
+
+{% block pageHeader %}
+    {% if Order.id %}
+        {% set breadcrumbs = {
+            'entity': Order,
+            'indexPath': path('dentiman_paymentbundle_order_index'),
+            'indexLabel': 'app.entity.order.plural'|trans,
+            'entityTitle': 'app.entity.order.singular'|trans
+        } %}
+        {{ parent() }}
+    {% else %}
+        {% set title = 'oro.ui.create_entity'|trans({ '%entityName%': 'app.entity.order.singular'|trans }) %}
+        {{ include('OroUIBundle::page_title_block.html.twig', { title: title }) }}
+    {% endif %}
+{% endblock pageHeader %}
+
+{% block content_data %}
+    {% set id = 'Order-edit' %}
+    {% set dataBlocks = [{
+        'title': 'General'|trans,
+        'class': 'active',
+        'subblocks': [{
+            'title': '',
+            'data': [
+                    form_row(form.orderItem),
+                ]
+            }]
+        }]
+    %}
+
+    {% set data = {
+        'formErrors': form_errors(form) ? form_errors(form) : null,
+        'dataBlocks': dataBlocks,
+    } %}
+
+    {{ parent() }}
+{% endblock content_data %}

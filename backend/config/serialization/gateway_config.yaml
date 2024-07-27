@@ -1,0 +1,8 @@
+Dentiman\PaymentBundle\Entity\GatewayConfig:
+  attributes:
+    id:
+      groups: ['read']
+    label:
+      groups: ['read']
+    factoryName:
+      groups: ['read']

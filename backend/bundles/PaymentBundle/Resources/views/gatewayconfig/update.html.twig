@@ -1,0 +1,83 @@
+
+{% extends 'OroUIBundle:actions:update.html.twig' %}
+{% import 'OroUIBundle::macros.html.twig' as UI %}
+{% form_theme form with 'OroFormBundle:Form:fields.html.twig' %}
+
+{% if form.vars.value.id %}
+    {% set formAction = path('dentiman_paymentbundle_gatewayconfig_update', { 'id': form.vars.value.id }) %}
+{% else %}
+    {% set formAction = path('dentiman_paymentbundle_gatewayconfig_create') %}
+{% endif %}
+
+{% block navButtons %}
+
+    {% set html = UI.saveAndCloseButton({
+        'route': 'dentiman_paymentbundle_gatewayconfig_view',
+        'params': {'id': '$id'}
+    }) %}
+    {% if is_granted('dentiman_paymentbundle_gatewayconfig_create') %}
+        {% set html = html ~ UI.saveAndNewButton({
+            'route': 'oro_task_create'
+        }) %}
+    {% endif %}
+    {% if is_granted('dentiman_paymentbundle_gatewayconfig_update') %}
+        {% set html = html ~ UI.saveAndStayButton({
+            'route': 'dentiman_paymentbundle_gatewayconfig_update',
+            'params': {'id': '$id'}
+        }) %}
+    {% endif %}
+    {{ UI.dropdownSaveButton({'html': html}) }}
+    {{ UI.cancelButton(path('dentiman_paymentbundle_gatewayconfig_index')) }}
+
+
+    {% if form.vars.value.id and is_granted('DELETE', form.vars.value) %}
+        {{ UI.deleteButton({
+            'dataUrl': path('oro_api_delete_dentiman_paymentbundle_gatewayconfig', {'id': form.vars.value.id}),
+            'dataRedirect': path('dentiman_paymentbundle_gatewayconfig_index'),
+            'aCss': 'no-hash remove-button',
+            'id': 'btn-remove-tag',
+            'dataId': form.vars.value.id,
+            'entity_label': 'dentiman.paymentbundle.gatewayconfig.entity_label'|trans
+        }) }}
+        {{ UI.buttonSeparator() }}
+    {% endif %}
+
+{% endblock navButtons %}
+
+{% block pageHeader %}
+    {% if form.vars.value.id %}
+        {% set breadcrumbs = {
+            'entity':      form.vars.value,
+            'indexPath':   path('dentiman_paymentbundle_gatewayconfig_index'),
+            'indexLabel': 'dentiman.paymentbundle.gatewayconfig.entity_label'|trans,
+            'entityTitle': form.vars.value.id
+        } %}
+        {{ parent() }}
+    {% else %}
+        {% set title = 'oro.ui.create_entity'|trans({'%entityName%': 'dentiman.paymentbundle.gatewayconfig.entity_label'|trans}) %}
+        {% include 'OroUIBundle::page_title_block.html.twig' with { title: title } %}
+    {% endif %}
+{% endblock pageHeader %}
+
+{% block content_data %}
+    {% set id = 'dentiman_paymentbundle_gatewayconfig-edit' %}
+
+    {% set dataBlocks = [{
+        'title': 'General'|trans,
+        'class': 'active',
+        'subblocks': [{
+            'title': '',
+            'data': [
+                form_row(form),
+
+
+            ]
+        }]
+    }]
+    %}
+    {% set data = {
+        'formErrors': form_errors(form)? form_errors(form) : null,
+        'dataBlocks': dataBlocks,
+    } %}
+    {{ parent() }}
+{% endblock content_data %}

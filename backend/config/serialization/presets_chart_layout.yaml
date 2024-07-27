@@ -1,0 +1,84 @@
+App\Entity\Chart\ChartLayout:
+  attributes:
+    timeFrame:
+      groups: ['crud']
+    width:
+      groups: ['crud']
+    height:
+      groups: ['crud']
+    volumeAreaHeight:
+      groups: ['crud']
+    bgColor:
+      groups: ['crud']
+    gridColor:
+      groups: ['crud']
+    preMarket:
+      groups: ['crud']
+    separateVolumeArea:
+      groups: ['crud']
+    spyOn:
+      groups: ['crud']
+    spyColor:
+      groups: ['crud']
+    barType:
+      groups: ['crud']
+    barWidth:
+      groups: ['crud']
+    barThick:
+      groups: ['crud']
+    outline:
+      groups: ['crud']
+    volumeBarWidth:
+      groups: ['crud']
+    colorUp:
+      groups: ['crud']
+    colorDown:
+      groups: ['crud']
+    outlineColorUp:
+      groups: ['crud']
+    outlineColorDown:
+      groups: ['crud']
+    volumeColorUp:
+      groups: ['crud']
+    volumeColorDown:
+      groups: ['crud']
+    sma1:
+      groups: ['crud']
+    sma2:
+      groups: ['crud']
+    sma3:
+      groups: ['crud']
+    ema1:
+      groups: ['crud']
+    ema2:
+      groups: ['crud']
+    ema3:
+      groups: ['crud']
+    sma1Color:
+      groups: ['crud']
+    sma2Color:
+      groups: ['crud']
+    sma3Color:
+      groups: ['crud']
+    ema1Color:
+      groups: ['crud']
+    ema2Color:
+      groups: ['crud']
+    ema3Color:
+      groups: ['crud']
+    maLabel:
+      groups: ['crud']
+    maLine:
+      groups: ['crud']
+    linesOpen:
+      groups: ['crud']
+    linesHigh:
+      groups: ['crud']
+    linesLow:
+      groups: ['crud']
+    linesClose:
+      groups: ['crud']
+    lineLastPrice:
+      groups: ['crud']
+    linesDays:
+      groups: ['crud']

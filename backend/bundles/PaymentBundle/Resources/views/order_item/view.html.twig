@@ -1,0 +1,61 @@
+{% extends 'OroUIBundle:actions:view.html.twig' %}
+{% import 'OroUIBundle::macros.html.twig' as UI %}
+{% set order_item = entity %}
+{% block navButtons %}
+{% if is_granted('EDIT', entity) %}
+    {{ UI.editButton({
+    'path' : path('dentiman_paymentbundle_orderitem_update', { id: entity.id }),
+    'entity_label': 'app.entity.order_item.singular'|trans,
+    }) }}
+{% endif %}
+
+{% if is_granted('DELETE', entity) %}
+    {{ UI.deleteButton({
+    'dataUrl': path('oro_api_delete_dentiman_paymentbundle_orderitem', {'id': entity.id}),
+    'dataRedirect': path('dentiman_paymentbundle_orderitem_index'),
+    'aCss': 'no-hash remove-button',
+    'id': 'btn-remove-Ticket',
+    'dataId': entity.id,
+    'entity_label': 'app.entity.order_item.singular'|trans,
+    }) }}
+{% endif %}
+{% endblock navButtons %}
+
+{% block pageHeader %}
+    {% set breadcrumbs = {
+    'entity':      entity,
+    'indexPath':   path('dentiman_paymentbundle_orderitem_index'),
+    'indexLabel': 'app.entity.order_item.singular'|trans,
+    'entityTitle': entity.id
+    } %}
+    {{ parent() }}
+{% endblock pageHeader %}
+
+{% block content_data %}
+    {% set data %}
+        <div class="widget-content">
+            <div class="row-fluid form-horizontal">
+                <div class="responsive-block">
+        {{ UI.renderProperty('app.entity.order_item.id'|trans, order_item.id) }}
+        {{ UI.renderProperty('app.entity.order_item.name'|trans, order_item.name) }}
+        {{ UI.renderProperty('app.entity.order_item.price'|trans, order_item.price) }}
+        {{ UI.renderProperty('app.entity.order_item.expiration'|trans, order_item.expiration) }}
+        {{ UI.renderProperty('app.entity.order_item.isEnabled'|trans, order_item.isEnabled ? 'Yes' : 'No') }}
+            </div>
+            </div>
+        </div>
+    {% endset %}
+    {% set dataBlocks = [
+        {
+        'title': 'Data'|trans,
+        'class': 'active',
+        'subblocks': [
+            { 'data' : [data] }
+        ]
+        }
+    ] %}
+
+    {% set id = 'OrderItemView' %}
+    {% set data = { 'dataBlocks': dataBlocks } %}
+    {{ parent() }}
+{% endblock content_data %}

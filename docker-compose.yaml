@@ -1,0 +1,65 @@
+version: '3.4'
+volumes:
+  web-letsencrypt:
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/ubuntu/letsencrypt/web
+      o: bind
+  etc-letsencrypt:
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/ubuntu/letsencrypt/etc
+      o: bind
+  mysql:
+services:
+#  node:
+#    image: node:lts-alpine
+#    volumes:
+#      - type: bind
+#        source: ./frontend
+#        target: /app
+#    depends_on:
+#      - mysql
+#    working_dir: /app
+#    ports:
+#      - "8080:8080"
+#    command: sh -c  "yarn install && yarn serve"
+  web:
+    build:
+      context: .
+      dockerfile: ./docker/web/Dockerfile
+      target: web_dev
+    volumes:
+      - ./backend:/var/www/html/backend
+      - web-letsencrypt:/var/www/html/web-letsencrypt
+      - etc-letsencrypt:/etc/letsencrypt
+    ports:
+      - "80:80"
+      - "443:443"
+#  worker:
+#      build:
+#        context: ./docker/worker
+#      volumes:
+#        - ./backend:/var/www/html/backend
+#      depends_on:
+#        - mysql
+#  mysql:
+#    build:
+#      context: ./docker/mysql
+#    environment:
+#      - MYSQL_DATABASE=sw4
+#      - MYSQL_USER=sw4
+#      - MYSQL_PASSWORD=Jd3_jN2dn01iPXd3eMp_
+#      - MYSQL_ROOT_PASSWORD=Jd3_jN2dn01iPXd3eMp_
+#      - TZ="America/New_York"
+#    volumes:
+#      - mysql:/var/lib/mysql
+#    ports:
+#      - "3306:3306"
+#
+#  redis:
+#    image: redis:latest
+#    ports:
+#      - "6379:6379"

@@ -1,0 +1,16 @@
+
+{% import 'OroUIBundle::macros.html.twig' as UI %}
+{% import 'PaymentBundle:payment/widget:tree.html.twig' as TREE %}
+<div class="widget-content">
+    <div class="row-fluid form-horizontal">
+        <div class="responsive-block">
+{{  UI.renderProperty('dentiman.paymentbundle.payment.number.label'|trans, entity.number) }}
+{{  UI.renderProperty('dentiman.paymentbundle.payment.description.label'|trans, entity.description) }}
+{{  UI.renderProperty('dentiman.paymentbundle.payment.clientemail.label'|trans, entity.clientEmail) }}
+{{  UI.renderProperty('dentiman.paymentbundle.payment.clientid.label'|trans, entity.clientId) }}
+{{  UI.renderProperty('dentiman.paymentbundle.payment.totalamount.label'|trans, entity.totalAmount) }}
+{{  UI.renderProperty('dentiman.paymentbundle.payment.currencycode.label'|trans, entity.currencyCode) }}
+{{  UI.renderHtmlProperty('dentiman.paymentbundle.payment.details.label'|trans, entity.details | json_encode ) }}
+        </div>
+    </div>
+</div>

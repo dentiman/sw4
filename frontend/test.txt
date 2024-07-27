@@ -1,0 +1,3 @@
+todo: validate watchlist name input
+hide swager
+

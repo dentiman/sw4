@@ -1,0 +1,56 @@
+
+{% extends 'OroUIBundle:actions:view.html.twig' %}
+{% import 'OroUIBundle::macros.html.twig' as UI %}
+
+{% block navButtons %}
+    {% if is_granted('EDIT', entity) %}
+        {{ UI.editButton({
+            'path' : path('dentiman_paymentbundle_payment_update', { id: entity.id }),
+            'entity_label': 'dentiman.paymentbundle.payment.entity_label'|trans,
+        }) }}
+    {% endif %}
+
+    {% if is_granted('DELETE', entity) %}
+        {{ UI.deleteButton({
+            'dataUrl': path('oro_api_delete_dentiman_paymentbundle_payment', {'id': entity.id}),
+            'dataRedirect': path('dentiman_paymentbundle_payment_index'),
+            'aCss': 'no-hash remove-button',
+            'id': 'btn-remove-Payment',
+            'dataId': entity.id,
+            'entity_label': 'dentiman.paymentbundle.payment.entity_label'|trans,
+        }) }}
+    {% endif %}
+{% endblock navButtons %}
+
+{% block pageHeader %}
+    {% set breadcrumbs = {
+        'entity':      entity,
+        'indexPath':   path('dentiman_paymentbundle_payment_index'),
+        'indexLabel': 'dentiman.paymentbundle.payment.entity_label'|trans,
+        'entityTitle': entity.id
+    } %}
+    {{ parent() }}
+{% endblock pageHeader %}
+
+{% block content_data %}
+    {% set data %}
+        {{ oro_widget_render({
+            'widgetType': 'block',
+            'title': null,
+            'url': path('dentiman_paymentbundle_payment_info', {id: entity.id})
+        }) }}
+    {% endset %}
+    {% set dataBlocks = [
+        {
+            'title': 'Data'|trans,
+            'class': 'active',
+            'subblocks': [
+            { 'data' : [data] }
+        ]
+        }
+    ] %}
+
+    {% set id = 'PaymentView' %}
+    {% set data = { 'dataBlocks': dataBlocks } %}
+    {{ parent() }}
+{% endblock content_data %}

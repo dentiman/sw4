@@ -1,0 +1,60 @@
+{% extends 'OroUIBundle:actions:view.html.twig' %}
+{% import 'OroUIBundle::macros.html.twig' as UI %}
+{% set service = entity %}
+{% block navButtons %}
+{% if is_granted('EDIT', entity) %}
+    {{ UI.editButton({
+    'path' : path('dentiman_paymentbundle_service_update', { id: entity.id }),
+    'entity_label': 'app.entity.service.singular'|trans,
+    }) }}
+{% endif %}
+
+{% if is_granted('DELETE', entity) %}
+    {{ UI.deleteButton({
+    'dataUrl': path('oro_api_delete_dentiman_paymentbundle_service', {'id': entity.id}),
+    'dataRedirect': path('dentiman_paymentbundle_service_index'),
+    'aCss': 'no-hash remove-button',
+    'id': 'btn-remove-Ticket',
+    'dataId': entity.id,
+    'entity_label': 'app.entity.service.singular'|trans,
+    }) }}
+{% endif %}
+{% endblock navButtons %}
+
+{% block pageHeader %}
+    {% set breadcrumbs = {
+    'entity':      entity,
+    'indexPath':   path('dentiman_paymentbundle_service_index'),
+    'indexLabel': 'app.entity.service.singular'|trans,
+    'entityTitle': entity.id
+    } %}
+    {{ parent() }}
+{% endblock pageHeader %}
+
+{% block content_data %}
+    {% set data %}
+        <div class="widget-content">
+            <div class="row-fluid form-horizontal">
+                <div class="responsive-block">
+                                            {{ UI.renderProperty('app.entity.service.id'|trans, service.id) }}
+                                            {{ UI.renderProperty('app.entity.service.name'|trans, service.name) }}
+                                            {{ UI.renderProperty('app.entity.service.isEnabled'|trans, service.isEnabled ? 'Yes' : 'No') }}
+                                            {{ UI.renderProperty('app.entity.service.code'|trans, service.code) }}
+                                    </div>
+            </div>
+        </div>
+    {% endset %}
+    {% set dataBlocks = [
+        {
+        'title': 'Data'|trans,
+        'class': 'active',
+        'subblocks': [
+            { 'data' : [data] }
+        ]
+        }
+    ] %}
+
+    {% set id = 'ServiceView' %}
+    {% set data = { 'dataBlocks': dataBlocks } %}
+    {{ parent() }}
+{% endblock content_data %}

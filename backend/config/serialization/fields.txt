@@ -1,0 +1,75 @@
+
+  id
+#  MainTickerTrait
+  exchange
+  name
+  etf
+#MainTechTrait
+  averageDailyVolume10Day
+  averageDailyVolume3Month
+  fiftyDayAverage
+  fiftyDayAverageChange
+  fiftyDayAverageChangePercent
+  twoHundredDayAverage
+  twoHundredDayAverageChange
+  twoHundredDayAverageChangePercent
+  fiftyTwoWeekHigh
+  fiftyTwoWeekHighChange
+  fiftyTwoWeekHighChangePercent
+  fiftyTwoWeekLow
+  fiftyTwoWeekLowChange
+  fiftyTwoWeekLowChangePercent
+  forwardPE
+  marketCap
+  sharesOutstanding
+  trailingAnnualDividendRate
+  trailingAnnualDividendYield
+  trailingPE
+#MainTmpTrait
+  sector
+  ind
+  country
+  atr
+  ipo
+  index
+#  Level1
+  price
+  op
+  hi
+  lo
+  chp
+  ch
+  ttime
+  bid
+  ask
+  bidsize
+  asksize
+  tcount
+  vol
+#  MainEarningsTrait
+  earn
+  earntime
+  eps
+  epsEst
+  epsSurprise
+  epsSurprisePercent
+#  Premarket
+  pvol
+  ptcount
+  pprice
+  pchp
+  pch
+  pttime
+
+#  CalculateTrrait
+  relativeVolume
+  gep
+  priceRange
+  chpo
+  cho
+  atrp
+  newHigh
+  newLow
+  level
+
+

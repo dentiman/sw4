@@ -1,0 +1,36 @@
+App\Entity\User:
+  attributes:
+    email:
+      groups: ['read','create','update','exist','profile-read','profile-write']
+    roles:
+      groups: ['read']
+    primaryDrawerOn:
+      groups: ['profile-read','profile-write']
+    historyQuotes:
+      groups: ['profile-read']
+    newTicker:
+      groups: ['profile-read','profile-write']
+    activeFilterPresetId:
+      groups: ['profile-read','profile-write']
+    activeChartPresetId:
+      groups: ['profile-read','profile-write']
+    activeTablePresetId:
+      groups: ['profile-read','profile-write']
+    watchlistId:
+      groups: ['profile-read','profile-write']
+    lightMode:
+      groups: ['profile-read','profile-write']
+    watchListByTabs:
+      groups: ['profile-read','profile-write']
+    premiumExpiration:
+      groups: ['profile-read','profile-write']
+    language:
+      groups: ['profile-read','profile-write']
+    plainPassword:
+      groups: ['create','reset']
+    resetCode:
+      groups: ['reset']
+    isPremium:
+      groups: ['profile-read']
+    premium:
+      groups: ['profile-read']

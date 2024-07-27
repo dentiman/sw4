@@ -1,0 +1,4 @@
+schedule_bundle:
+  resource: '@ScheduleBundle/Controller/RunCommandController.php'
+  prefix: /schedule
+  type: annotation

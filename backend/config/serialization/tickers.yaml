@@ -1,0 +1,11 @@
+App\Entity\Feed\MainTickers:
+  attributes:
+    id:
+      groups: ['read','profile-read']
+    exchange:
+      groups: ['read','profile-read']
+    name:
+      groups: ['read','profile-read']
+    etf:
+      groups: ['read','profile-read']
+

@@ -1,0 +1,79 @@
+{% extends 'OroUIBundle:actions:view.html.twig' %}
+{% import 'OroUIBundle::macros.html.twig' as UI %}
+{% set order = entity %}
+{% block navButtons %}
+    <div class='btn-group'>
+        {{ UI.button({
+            'path': path('paymentbundle_capture_order',{order: entity.id, gateway: 2}),
+            'title': 'Pay'|trans,
+            'label': 'Pay'|trans,
+            'iCss': 'fa-user',
+            'aCss': 'no-hash btn-success',
+        }) }}
+    </div>
+    <div class='btn-group'>
+        {{ UI.button({
+            'path': path('paymentbundle_setup_order_service',{order: entity.id, gateway: 2}),
+            'title': 'Activate'|trans,
+            'label': 'Activate'|trans,
+            'iCss': 'fa-user',
+            'aCss': 'no-hash btn-success',
+        }) }}
+    </div>
+{% if is_granted('EDIT', entity) %}
+    {{ UI.editButton({
+    'path' : path('dentiman_paymentbundle_order_update', { id: entity.id }),
+    'entity_label': 'app.entity.order.singular'|trans,
+    }) }}
+{% endif %}
+
+{% if is_granted('DELETE', entity) %}
+    {{ UI.deleteButton({
+    'dataUrl': path('oro_api_delete_dentiman_paymentbundle_order', {'id': entity.id}),
+    'dataRedirect': path('dentiman_paymentbundle_order_index'),
+    'aCss': 'no-hash remove-button',
+    'id': 'btn-remove-Ticket',
+    'dataId': entity.id,
+    'entity_label': 'app.entity.order.singular'|trans,
+    }) }}
+{% endif %}
+{% endblock navButtons %}
+
+{% block pageHeader %}
+    {% set breadcrumbs = {
+    'entity':      entity,
+    'indexPath':   path('dentiman_paymentbundle_order_index'),
+    'indexLabel': 'app.entity.order.singular'|trans,
+    'entityTitle': entity.id
+    } %}
+    {{ parent() }}
+{% endblock pageHeader %}
+
+{% block content_data %}
+    {% set data %}
+        <div class="widget-content">
+            <div class="row-fluid form-horizontal">
+                <div class="responsive-block">
+{{ UI.renderProperty('app.entity.order.total'|trans, order.total) }}
+{{ UI.renderProperty('app.entity.order.status'|trans, order.status) }}
+{{ UI.renderProperty('app.entity.order.fulfilledAt'|trans, order.fulfilledAt ? order.fulfilledAt|date('Y-m-d H:i:s') : '') }}
+{{ UI.renderProperty('app.entity.order.invoiceNumber'|trans, order.invoiceNumber) }}
+{{ UI.renderProperty('app.entity.order_item.singular'|trans, order.orderItem.name) }}
+                </div>
+            </div>
+        </div>
+    {% endset %}
+    {% set dataBlocks = [
+        {
+        'title': 'Data'|trans,
+        'class': 'active',
+        'subblocks': [
+            { 'data' : [data] }
+        ]
+        }
+    ] %}
+
+    {% set id = 'OrderView' %}
+    {% set data = { 'dataBlocks': dataBlocks } %}
+    {{ parent() }}
+{% endblock content_data %}

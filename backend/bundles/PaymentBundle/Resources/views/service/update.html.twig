@@ -1,0 +1,58 @@
+{% extends 'OroUIBundle:actions:update.html.twig' %}
+{% form_theme form with 'OroFormBundle:Form:fields.html.twig' %}
+{% import 'OroUIBundle::macros.html.twig' as UI %}
+{% set Service = form.vars.value %}
+
+{% if Service.id %}
+    {% oro_title_set({params : {"%label%": Service.id }}) %}
+    {% set formAction = path('dentiman_paymentbundle_service_update', { 'id': Service.id }) %}
+{% else %}
+    {% oro_title_set({params : {"%entityName%": 'app.entity.service.singular'|trans }}) %}
+    {% set formAction = path('dentiman_paymentbundle_service_create') %}
+{% endif %}
+
+{% block navButtons %}
+    {{ UI.cancelButton(path('dentiman_paymentbundle_service_index')) }}
+    {{ UI.dropdownSaveButton({
+    'html': UI.saveAndCloseButton()
+    }) }}
+{% endblock navButtons %}
+
+{% block pageHeader %}
+    {% if Service.id %}
+        {% set breadcrumbs = {
+            'entity': Service,
+            'indexPath': path('dentiman_paymentbundle_service_index'),
+            'indexLabel': 'app.entity.service.plural'|trans,
+            'entityTitle': 'app.entity.service.singular'|trans
+        } %}
+        {{ parent() }}
+    {% else %}
+        {% set title = 'oro.ui.create_entity'|trans({ '%entityName%': 'app.entity.service.singular'|trans }) %}
+        {{ include('OroUIBundle::page_title_block.html.twig', { title: title }) }}
+    {% endif %}
+{% endblock pageHeader %}
+
+{% block content_data %}
+    {% set id = 'Service-edit' %}
+    {% set dataBlocks = [{
+        'title': 'General'|trans,
+        'class': 'active',
+        'subblocks': [{
+            'title': '',
+            'data': [
+                    form_row(form.name),
+                    form_row(form.isEnabled),
+                    form_row(form.code),
+                ]
+            }]
+        }]
+    %}
+
+    {% set data = {
+        'formErrors': form_errors(form) ? form_errors(form) : null,
+        'dataBlocks': dataBlocks,
+    } %}
+
+    {{ parent() }}
+{% endblock content_data %}

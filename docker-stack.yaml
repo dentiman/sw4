@@ -1,0 +1,68 @@
+version: '3.4'
+volumes:
+  web-letsencrypt:
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/denismegaadmin/letsencrypt/web
+      o: bind
+  etc-letsencrypt:
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/denismegaadmin/letsencrypt/etc
+      o: bind
+  data_mysql:
+  log:
+services:
+  web:
+    image: registry.gitlab.com/dentiman/sw4/sw4/web:v4.0.62
+    volumes:
+      - web-letsencrypt:/var/www/html/web-letsencrypt
+      - etc-letsencrypt:/etc/letsencrypt
+    deploy:
+      replicas: 1
+#      resources:
+#        limits:
+#          cpus: '0.25'
+#          memory: 2048M
+    ports:
+      - "80:80"
+      - "443:443"
+  worker:
+    image: registry.gitlab.com/dentiman/sw4/sw4/worker:v4.0.62
+    deploy:
+      replicas: 1
+#      resources:
+#        limits:
+#          cpus: '0.25'
+#          memory: 1024M
+  mysql:
+    image: registry.gitlab.com/dentiman/sw4/sw4/mysql:latest
+    environment:
+      - MYSQL_DATABASE=sw4
+      - MYSQL_USER=sw4
+      - MYSQL_PASSWORD=Jd3_jN2dn01iPXd3eMp_
+      - MYSQL_ROOT_PASSWORD=Jd3_jN2dn01iPXd3eMp_
+      - TZ="America/New_York"
+    volumes:
+      - data_mysql:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    deploy:
+      replicas: 1
+#      resources:
+#        limits:
+#          cpus: '0.25'
+#          memory: 512M
+  redis:
+    image: redis:latest
+    ports:
+      - "6379:6379"
+    deploy:
+      replicas: 1
+#      resources:
+#        limits:
+#          cpus: '0.10'
+#          memory: 512M
+

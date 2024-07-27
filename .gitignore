@@ -1,0 +1,40 @@
+.DS_Store
+frontend/node_modules
+frontend/dist
+
+# local env files
+frontend/.env.local
+frontend/.env.*.local
+
+# Log files
+frontend/npm-debug.log*
+frontend/yarn-debug.log*
+frontend/yarn-error.log*
+
+# Editor directories and files
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+#
+backend/.env.local
+backend/.env.local.php
+backend/.env.*.local
+backend/public/bundles/
+backend/var/
+backend/vendor/
+!backend/var/storage/daily/.gitkeep
+!backend/var/storage/intraday/.gitkeep
+###< symfony/framework-bundle ###
+
+###> symfony/phpunit-bridge ###
+backend/.phpunit
+backend/.phpunit.result.cache
+backend/phpunit.xml
+###< symfony/phpunit-bridge ###
+###> lexik/jwt-authentication-bundle ###
+backend/config/jwt/*.pem

@@ -1,0 +1,10 @@
+Dentiman\PaymentBundle\Entity\Order:
+  attributes:
+    createdAt:
+      groups: ['read','create','update']
+    serviceVariant:
+      groups: ['read','create']
+    gatewayConfigId:
+      groups: ['read','update','profile']
+    targetUrl:
+      groups: ['read']
