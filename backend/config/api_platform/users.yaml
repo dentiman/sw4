@@ -1,0 +1,47 @@
+resources:
+  App\Entity\User:
+    collectionOperations:
+      get: ~
+      post:
+        method: 'POST'
+        path: /register
+        denormalization_context:
+          groups: [ 'create' ]
+    itemOperations:
+      get:
+        method: 'GET'
+        security: 'is_granted("ROLE_ADMIN") or object == user'
+        security_message: 'Sorry, but you are not the user owner.'
+      patch:
+        security: 'is_granted("ROLE_ADMIN") or object == user'
+        controller: App\Controller\Api\ProfileUpdateAction
+        normalization_context:
+          skip_null_values: false
+          groups: [ 'profile-read' ]
+        denormalization_context:
+          groups: [ 'profile-write' ]
+      exist:
+        method: 'POST'
+        path: /user/exist
+        controller: App\Controller\Api\UserGetItemAction
+        defaults:
+          _api_receive: false
+        normalization_context:
+          skip_null_values: false
+          groups: ['exist']
+      profile:
+        method: 'GET'
+        path: /user/profile
+        controller: App\Controller\Api\ProfileGetItemAction
+        defaults:
+          _api_receive: false
+        normalization_context:
+          skip_null_values: false
+          groups: ['profile-read']
+    attributes:
+      pagination_items_per_page: 25
+      normalization_context:
+        skip_null_values: false
+        groups: ['read','exist','profile-read']
+      denormalization_context:
+        groups: ['read','create','update','exist','profile-write']

@@ -1,0 +1,64 @@
+resources:
+  App\Entity\Feed\MainGrid:
+    collectionOperations:
+      get_watchlist:
+        method: 'GET'
+        path: /quote_watchlist
+        pagination_items_per_page: 200
+        filters:
+          - 'main_grid.search_filter'
+      get:
+        path: /quote
+        filters:
+          - 'main_grid.earning_date_filter'
+          - 'main_grid.range_filter'
+          - 'main_grid.numeric_filter'
+          - 'main_grid.search_filter'
+          - 'main_grid.order_filter'
+        order:
+          chp: DESC
+      get_tickers:
+        method: 'GET'
+        path: /quote_tickers
+        pagination_enabled: false
+        normalization_context:
+          groups: [ 'tickers' ]
+        filters:
+          - 'main_grid.earning_date_filter'
+          - 'main_grid.range_filter'
+          - 'main_grid.numeric_filter'
+          - 'main_grid.search_filter'
+          - 'main_grid.order_filter'
+
+        order:
+          chp: DESC
+      export:
+        method: 'GET'
+        path: /quote_export
+        pagination_enabled: false
+        filters:
+          - 'main_grid.earning_date_filter'
+          - 'main_grid.range_filter'
+          - 'main_grid.numeric_filter'
+          - 'main_grid.search_filter'
+          - 'main_grid.order_filter'
+        order:
+          chp: DESC
+    itemOperations:
+      get:
+        path: /quote/{id}
+    attributes:
+      pagination_items_per_page: 36
+      normalization_context:
+        groups: ['read']
+#    attributes:
+#      pagination_items_per_page: 10
+#      filters:
+#        - name.search_filter
+#        - all_fields.order_filter
+#    properties:
+#      categories:
+#        subresource:
+#          resourceClass: 'App\Entity\MarketCategory'
+#          collection: true
+

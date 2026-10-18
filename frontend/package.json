@@ -1,0 +1,55 @@
+{
+  "name": "Stock-watcher",
+  "version": "1.2.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint",
+    "dev": "npm run serve"
+  },
+  "dependencies": {
+    "axios": "^0.19.1",
+    "core-js": "^3.4.4",
+    "date-fns": "^2.18.0",
+    "jwt-decode": "^2.2.0",
+    "lodash": "^4.17.15",
+    "moment": "^2.24.0",
+    "pluralize": "^8.0.0",
+    "router": "^1.3.3",
+    "trading-vue-js": "^1.0.1",
+    "vue": "^2.6.11",
+    "vue-gtag": "^1.16.1",
+    "vue-head": "^2.2.0",
+    "vue-i18n": "^8.15.3",
+    "vue-resizable": "^2.0.5",
+    "vue-router": "^3.5.1",
+    "vue-scrollto": "^2.20.0",
+    "vuelidate": "^0.7.4",
+    "vuetify": "^2.4.5",
+    "vuetify-confirm": "^2.0.6",
+    "vuex": "^3.5.1",
+    "vuex-map-fields": "^1.3.6"
+  },
+  "devDependencies": {
+    "@indielayer/eslint-config-vue": "^1.0.0",
+    "@vue/cli-plugin-babel": "^4.5.11",
+    "@vue/cli-plugin-eslint": "^4.5.11",
+    "@vue/cli-service": "^4.5.11",
+    "babel-eslint": "^10.1.0",
+    "core-js": "^3.6.4",
+    "eslint": "^6.7.2",
+    "eslint-plugin-vue": "^6.2.2",
+    "raw-loader": "^4.0.1",
+    "sass": "^1.32.5",
+    "sass-loader": "^10.1.1",
+    "vue-cli-plugin-vuetify": "^2.0.7",
+    "vue-template-compiler": "^2.6.12",
+    "vuetify-loader": "^1.7.1"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ]
+}

@@ -1,0 +1,10 @@
+resources:
+  Dentiman\PaymentBundle\Entity\Order:
+    collectionOperations:
+      get: ~
+      post:
+        controller: App\Controller\Api\OrderPostAction
+    itemOperations:
+      get: ~
+    attributes:
+      pagination_items_per_page: 25

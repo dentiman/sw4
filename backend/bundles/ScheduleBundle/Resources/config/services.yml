@@ -1,0 +1,80 @@
+services:
+  Dentiman\ScheduleBundle\Command\CronCommand:
+    arguments:
+      - '@doctrine'
+      - '@schedule.helper.cron'
+      - '@logger'
+      - '%kernel.environment%'
+    tags:
+      - { name: console.command }
+  Dentiman\ScheduleBundle\Command\CronDefinitionsLoadCommand:
+    arguments: ['@doctrine.orm.entity_manager']
+    tags:
+      - { name: console.command }
+  schedule.schedule_manager:
+    class: Dentiman\ScheduleBundle\Entity\Manager\ScheduleManager
+    arguments:
+      - '@doctrine'
+      - Dentiman\ScheduleBundle\Entity\Schedule
+
+  schedule.deferred_scheduler:
+    class: Dentiman\ScheduleBundle\Entity\Manager\DeferredScheduler
+    arguments:
+      - '@schedule.schedule_manager'
+      - '@doctrine'
+      - Dentiman\ScheduleBundle\Entity\Schedule
+
+  schedule.command_args_tokenizer:
+    class: 'Dentiman\ScheduleBundle\ORM\CommandArgsTokenizer'
+    public: false
+    calls:
+      - [ addNormalizer, [ '@schedule.command_args_normalizer.default' ] ]
+      - [ addNormalizer, [ '@schedule.command_args_normalizer.pgsql92' ] ]
+
+  schedule.command_args_normalizer.default:
+    class: 'Dentiman\ScheduleBundle\ORM\CommandArgsNormalizer'
+    public: false
+
+  schedule.command_args_normalizer.pgsql92:
+    class: 'Dentiman\ScheduleBundle\ORM\Pgsql92CommandArgsNormalizer'
+    public: false
+
+  schedule.helper.cron:
+    class: 'Dentiman\ScheduleBundle\Helper\CronHelper'
+
+  schedule.engine.command_runner:
+    class: Dentiman\ScheduleBundle\Engine\CommandRunner
+    arguments:
+      - '@kernel'
+
+  schedule.repository.schedule:
+    class: Dentiman\ScheduleBundle\Entity\Repository\ScheduleRepository
+    public: true
+    factory: ['@doctrine', getRepository]
+    arguments:
+      - 'Dentiman\ScheduleBundle\Entity\Schedule'
+
+  schedule.validator.schedule_intervals_intersection:
+    class: 'Dentiman\ScheduleBundle\Validator\Constraints\ScheduleIntervalsIntersectionValidator'
+    tags:
+      - { name: validator.constraint_validator, alias: oro_cron_schedule_intervals_intersection_validator }
+
+  schedule.form.type.schedule_interval:
+    class: 'Dentiman\ScheduleBundle\Form\Type\ScheduleIntervalType'
+    tags:
+      - { name: form.type, alias: oro_cron_schedule_interval }
+
+  schedule.form.type.schedule_intervals_collection:
+    class: 'Dentiman\ScheduleBundle\Form\Type\ScheduleIntervalsCollectionType'
+    tags:
+      - { name: form.type, alias: oro_cron_schedule_intervals_collection }
+
+  schedule.checker.schedule_interval_checker:
+    class: Dentiman\ScheduleBundle\Checker\ScheduleIntervalChecker
+  Dentiman\ScheduleBundle\Controller\RunCommandController:
+    arguments:
+      - '@doctrine.orm.entity_manager'
+      - '@kernel'
+    tags:
+      - { name: controller.service_arguments }
+      - { name: container.service_subscriber }

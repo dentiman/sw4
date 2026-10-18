@@ -1,0 +1,8 @@
+App\Entity\Presets\ScreenerFilter:
+  attributes:
+    name:
+      groups: ['crud']
+    filters:
+      groups: ['crud']
+    sorting:
+      groups: ['crud']

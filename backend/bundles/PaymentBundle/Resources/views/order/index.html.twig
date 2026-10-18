@@ -1,0 +1,15 @@
+{% extends 'OroUIBundle:actions:index.html.twig' %}
+{% import 'OroUIBundle::macros.html.twig' as UI %}
+{% set gridName = 'dentiman_paymentbundle_order-grid' %}
+{% set pageTitle = 'app.entity.order.singular'|trans %}
+
+{% block navButtons %}
+{% if is_granted('dentiman_paymentbundle_order_create') %}
+<div class='btn-group'>
+    {{ UI.addButton({
+    'path' : path('dentiman_paymentbundle_order_create'),
+    'entity_label': 'app.entity.order.singular'|trans
+    }) }}
+</div>
+{% endif %}
+{% endblock %}

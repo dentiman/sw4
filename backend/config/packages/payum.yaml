@@ -1,0 +1,9 @@
+payum:
+  security:
+    token_storage:
+      Dentiman\PaymentBundle\Entity\PaymentToken: { doctrine: orm }
+  storages:
+    Dentiman\PaymentBundle\Entity\Payment: { doctrine: orm }
+  dynamic_gateways:
+    config_storage:
+      Dentiman\PaymentBundle\Entity\GatewayConfig: { doctrine: orm }

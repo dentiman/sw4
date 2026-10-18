@@ -1,0 +1,61 @@
+services:
+    payment.form_registry.form_type_registry:
+        class: Dentiman\PaymentBundle\Form\Registry\FormTypeRegistry
+        public: true
+    Dentiman\PaymentBundle\ServiceProcessor\OrderPaymentProcessor:
+      arguments: ['@payum','@security.authorization_checker','@doctrine.orm.entity_manager','@payment.service_processor_registry']
+    payment.order_payment_processor:
+        public: true
+        class: Dentiman\PaymentBundle\ServiceProcessor\OrderPaymentProcessor
+        arguments: ['@payum','@security.authorization_checker','@doctrine.orm.entity_manager','@payment.service_processor_registry']
+        tags:
+            - { name: payum.extension, all: true,  prepend: true }
+    Dentiman\PaymentBundle\Controller\PaymentController:
+        tags:
+            - { name: controller.service_arguments }
+            - { name: container.service_subscriber }
+    dentiman_paymentbundle_gatewayconfig.form.type:
+        class: Dentiman\PaymentBundle\Form\Type\GatewayConfigType
+        arguments: ['@payment.form_registry.form_type_registry']
+        public: true
+        tags:
+            - { name: form.type, alias: dentiman_paymentbundle_gatewayconfig }
+##  SERVICE process registry
+#    dentiman_payment.service_processor.base_action:
+#        class: Dentiman\PaymentBundle\ServiceProcessor\BaseAction
+#        public: true
+#        tags:
+#            - { name: service_processor, alias: basic }
+    payment.service_processor_registry:
+        class: Dentiman\PaymentBundle\Registry\ServiceSetupGatewayRegistry
+        public: true
+
+#   Gateway Factories
+    paypal_gateway_factory.paypal:
+        class: Payum\Core\Bridge\Symfony\Builder\GatewayFactoryBuilder
+        arguments: [Payum\Paypal\ExpressCheckout\Nvp\PaypalExpressCheckoutGatewayFactory]
+        tags:
+            - { name: payum.gateway_factory_builder, factory: paypal_express_checkout_nvp }
+    dentiman.webmonay_gateway_factory:
+        class: Payum\Core\Bridge\Symfony\Builder\GatewayFactoryBuilder
+        arguments: [Dentiman\PaymentBundle\Gateway\Webmoney\WebmoneyGatewayFactory]
+        tags:
+            - { name: payum.gateway_factory_builder, factory: webmoney }
+    dentiman.liqpay_gateway_factory:
+        class: Payum\Core\Bridge\Symfony\Builder\GatewayFactoryBuilder
+        arguments: [ Dentiman\PaymentBundle\Gateway\Liqpay\LiqpayGatewayFactory ]
+        tags:
+            - { name: payum.gateway_factory_builder, factory: liqpay }
+
+# Gateway forms registry
+    payment.form_type.paypal_gateway_configuration_type:
+        class: Dentiman\PaymentBundle\Form\Type\PaypalGatewayConfigurationType
+        public: true
+        tags:
+            - { name: form.type, alias: Dentiman\PaymentBundle\Form\Type\PaypalGatewayConfigurationType }
+            - { name: payment.gateway_configuration_type, type: paypal_express_checkout_nvp, label: paypal_express_checkout}
+    payment.form_type.webmoney_gateway_config_type:
+        class: Dentiman\PaymentBundle\Form\Type\WebmoneyGatewayConfigType
+        tags:
+            - { name: form.type, alias: Dentiman\PaymentBundle\Form\Type\WebmoneyGatewayConfigType }
+            - { name: payment.gateway_configuration_type, type: webmoney, label: Webmoney}

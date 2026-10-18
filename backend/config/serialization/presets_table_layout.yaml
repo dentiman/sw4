@@ -1,0 +1,7 @@
+App\Entity\Presets\TableLayout:
+  attributes:
+    name:
+      groups: ['crud']
+    fields:
+      groups: ['crud']
+

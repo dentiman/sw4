@@ -1,0 +1,141 @@
+App\Entity\Feed\MainGrid:
+  attributes:
+    id:
+      groups: ['read','tickers']
+#  MainTickerTrait
+    exchange:
+      groups: ['read']
+    name:
+      groups: ['read']
+    etf:
+      groups: ['read']
+#MainTechTrait
+    averageDailyVolume10Day:
+      groups: ['read']
+    averageDailyVolume3Month:
+      groups: ['read']
+    fiftyDayAverage:
+      groups: ['read']
+    fiftyDayAverageChange:
+      groups: ['read']
+    fiftyDayAverageChangePercent:
+      groups: ['read']
+    twoHundredDayAverage:
+      groups: ['read']
+    twoHundredDayAverageChange:
+      groups: ['read']
+    twoHundredDayAverageChangePercent:
+      groups: ['read']
+    fiftyTwoWeekHigh:
+      groups: ['read']
+    fiftyTwoWeekHighChange:
+      groups: ['read']
+    fiftyTwoWeekHighChangePercent:
+      groups: ['read']
+    fiftyTwoWeekLow:
+      groups: ['read']
+    fiftyTwoWeekLowChange:
+      groups: ['read']
+    fiftyTwoWeekLowChangePercent:
+      groups: ['read']
+    forwardPE:
+      groups: ['read']
+    marketCap:
+      groups: ['read']
+    sharesOutstanding:
+      groups: ['read']
+    trailingAnnualDividendRate:
+      groups: ['read']
+    trailingAnnualDividendYield:
+      groups: ['read']
+    trailingPE:
+      groups: ['read']
+#MainTmpTrait
+    sector:
+      groups: ['read']
+    ind:
+      groups: ['read']
+    country:
+      groups: ['read']
+    atr:
+      groups: ['read']
+    ipo:
+      groups: ['read']
+    index:
+      groups: ['read']
+#  Level1
+    price:
+      groups: ['read']
+    op:
+      groups: ['read']
+    hi:
+      groups: ['read']
+    lo:
+      groups: ['read']
+    chp:
+      groups: ['read']
+    ch:
+      groups: ['read']
+    ttime:
+      groups: ['read']
+    bid:
+      groups: ['read']
+    ask:
+      groups: ['read']
+    bidsize:
+      groups: ['read']
+    asksize:
+      groups: ['read']
+    tcount:
+      groups: ['read']
+    vol:
+      groups: ['read']
+    spread:
+      groups: ['read']
+#  MainEarningsTrait
+    earn:
+      groups: ['read']
+    earntime:
+      groups: ['read']
+    eps:
+      groups: ['read']
+    epsEst:
+      groups: ['read']
+    epsSurprise:
+      groups: ['read']
+    epsSurprisePercent:
+      groups: ['read']
+#  Premarket
+    pvol:
+      groups: ['read']
+    ptcount:
+      groups: ['read']
+    pprice:
+      groups: ['read']
+    pchp:
+      groups: ['read']
+    pch:
+      groups: ['read']
+    pttime:
+      groups: ['read']
+#  CalculateTrrait
+    relativeVolume:
+      groups: ['read']
+    gep:
+      groups: ['read']
+    priceRange:
+      groups: ['read']
+    chpo:
+      groups: ['read']
+    cho:
+      groups: ['read']
+    atrp:
+      groups: ['read']
+    newHigh:
+      groups: ['read']
+    newLow:
+      groups: ['read']
+    level:
+      groups: ['read']
+
+

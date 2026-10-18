@@ -1,0 +1,9 @@
+Dentiman\PaymentBundle\Entity\GatewayConfig:
+    collectionOperations:
+      get: ~
+    itemOperations:
+      get: ~
+    attributes:
+      normalization_context:
+        skip_null_values: false
+        groups: ['read']

@@ -1,0 +1,136 @@
+stages:
+  - build
+#  - test
+  - publish
+  - deploy
+
+
+variables:
+  WEB_IMAGE: $CI_REGISTRY_IMAGE/web:$CI_COMMIT_TITLE
+  WORKER_IMAGE: $CI_REGISTRY_IMAGE/worker:$CI_COMMIT_TITLE
+  MYSQL_IMAGE: $CI_REGISTRY_IMAGE/mysql:latest
+
+frontend:build:
+  when: manual
+  image: node:16
+  stage: build
+  script:
+    - yarn install  --cwd=frontend --progress=false
+    - yarn run --cwd=frontend build
+  artifacts:
+    expire_in: 1 week
+    paths:
+      - frontend/dist
+
+
+publish:web+worker:
+  when: manual
+  image: docker:19.03.12
+  stage: publish
+  services:
+    - docker:19.03.12-dind
+  before_script:
+    - docker info
+  script:
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    - docker build -f ./docker/app-base/Dockerfile --target app_prod -t app_base_image .
+    - docker build -f ./docker/web/Dockerfile --target web_prod  -t $WEB_IMAGE .
+    - docker push $WEB_IMAGE
+    - docker build -t $WORKER_IMAGE ./docker/worker
+    - docker push $WORKER_IMAGE
+
+#publish:mysql:
+#  when: manual
+#  image: docker:19.03.12
+#  stage: publish
+#  services:
+#    - docker:19.03.12-dind
+#  before_script:
+#    - docker info
+#  script:
+#    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+#    - docker build --pull -t $MYSQL_IMAGE ./docker/mysql
+#    - docker push $MYSQL_IMAGE
+
+.deploy_template:
+  when: manual
+  stage: deploy
+  variables:
+    DEPLOY_SERVER: override
+    DEPLOY_PEM: override
+    DEPLOY_PORT: override
+  before_script:
+    - apt-get update -qq
+    - apt-get install -qq git
+    - 'which ssh-agent || ( apt-get install -qq openssh-client )'
+    - eval $(ssh-agent -s)
+    - ssh-add <(echo "$DEPLOY_PEM")
+    - mkdir -p ~/.ssh
+    - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
+  script:
+    - echo WEB_IMAGE=$WEB_IMAGE >> .env
+    - echo WORKER_IMAGE=$WORKER_IMAGE >> .env
+    - echo MYSQL_IMAGE=$MYSQL_IMAGE >> .env
+    - echo  ${DEPLOY_SERVER}
+    - scp -P $DEPLOY_PORT  docker-stack.yaml  $DEPLOY_SERVER:~
+    - scp -P $DEPLOY_PORT  .env  ${DEPLOY_SERVER}:~
+    - ssh -p $DEPLOY_PORT  "${DEPLOY_SERVER}" "newgrp docker"
+    - ssh -p $DEPLOY_PORT  "${DEPLOY_SERVER}" "docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY"
+    - ssh -p $DEPLOY_PORT  "${DEPLOY_SERVER}" "docker pull $WEB_IMAGE"
+    - ssh -p $DEPLOY_PORT  "${DEPLOY_SERVER}" "docker pull $WORKER_IMAGE"
+    - ssh -p $DEPLOY_PORT  "${DEPLOY_SERVER}" "docker pull $MYSQL_IMAGE"
+    - ssh -p $DEPLOY_PORT  "${DEPLOY_SERVER}" "docker stack deploy -c docker-stack.yaml sw4"
+
+deploy:stage:
+  extends: .deploy_template
+  variables:
+    DEPLOY_SERVER: $STAGE_SERVER
+    DEPLOY_PEM: $STAGE_SERVER_PEM
+    DEPLOY_PORT: $STAGE_PORT
+
+deploy:prod:
+  extends: .deploy_template
+  variables:
+    DEPLOY_SERVER: $PROD_SERVER
+    DEPLOY_PEM: $PROD_SERVER_PEM
+    DEPLOY_PORT: $PROD_PORT
+
+deploy:dev:
+  when: manual
+  stage: deploy
+  before_script:
+    - apt-get update -qq
+    - apt-get install -qq git
+    - 'which ssh-agent || ( apt-get install -qq openssh-client )'
+    - eval $(ssh-agent -s)
+    - ssh-add <(echo "$DEV_PEM")
+    - mkdir -p ~/.ssh
+    - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
+  script:
+    - echo $DEV_SERVER
+    - ssh -p $DEV_PORT  "${DEV_SERVER}" "sudo yum update -y"
+    - ssh -p $DEV_PORT  "${DEV_SERVER}" "sudo amazon-linux-extras install docker"
+    - ssh -p $DEV_PORT  "${DEV_SERVER}" "sudo yum install docker"
+    - ssh -p $DEV_PORT  "${DEV_SERVER}" "sudo service docker start"
+    - ssh -p $DEV_PORT  "${DEV_SERVER}" "sudo usermod -a -G docker ec2-user"
+    - ssh -p $DEV_PORT  "${DEV_SERVER}" "docker info"
+    - ssh -p $DEV_PORT  "${DEV_SERVER}" "sudo curl -L https://github.com/docker/compose/releases/download/1.22.0/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose"
+    - ssh -p $DEV_PORT  "${DEV_SERVER}" "sudo chmod +x /usr/local/bin/docker-compose"
+    - ssh -p $DEV_PORT  "${DEV_SERVER}" "docker-compose version"
+
+    - echo VUE_APP_ENTRYPOINT=http://$DEV_SERVER_HOST >> frontend/.env.local
+    - echo APP_ENV=dev >> backend/.env.local
+    - scp -P $DEV_PORT -r ./backend  $DEV_SERVER:~
+    - scp -P $DEV_PORT -r ./frontend  $DEV_SERVER:~
+    - scp -P $DEV_PORT -r ./docker   $DEV_SERVER:~
+    - scp -P $DEV_PORT -r docker-compose.yaml $DEV_SERVER:~
+    - ssh -p $DEV_PORT  "$DEV_SERVER" "mkdir backend/var && chmod 777 -R backend/var"
+    - ssh -p $DEV_PORT  "$DEV_SERVER" "sudo chmod +x backend/bin/jwt_key.sh"
+    - ssh -p $DEV_PORT  "$DEV_SERVER" "sudo chmod +x backend/bin/first-install.sh"
+    - ssh -p $DEV_PORT  "$DEV_SERVER" "cd backend  && bin/jwt_key.sh"
+    - ssh -p $DEV_PORT  "$DEV_SERVER" "docker run --rm --interactive   --volume ~/backend:/app composer install --ignore-platform-reqs --no-scripts"
+    - ssh -p $DEV_PORT  "$DEV_SERVER" "docker build -f ./docker/app-base/Dockerfile --target app_dev -t app_base_image ."
+    - ssh -p $DEV_PORT  "$DEV_SERVER" "docker-compose up -d --build"
+    - ssh -p $DEV_PORT  "$DEV_SERVER" "docker-compose exec -T worker sh -c 'sleep 3 && php /var/www/html/backend/bin/console assets:install'"
+#    - ssh -p $DEV_PORT  "$DEV_SERVER" "docker-compose exec -T worker sh -c 'backend/bin/first-install.sh'"
+

@@ -1,0 +1,13 @@
+
+
+# Schedulelog CRUD generated at 2018-12-08 10:44:15
+dentiman.schedulebundle.schedulelog.id.label: Id
+dentiman.schedulebundle.schedulelog.issuccess.label: Issuccess
+dentiman.schedulebundle.schedulelog.message.label: Message
+dentiman.schedulebundle.schedulelog.startedat.label: Started At
+dentiman.schedulebundle.schedulelog.finishedat.label: Finished At
+dentiman.schedulebundle.schedulelog.schedule.label: Schedule
+dentiman.schedulebundle.schedulelog.entity_label: Schedule Log
+dentiman.schedulebundle.schedulelog.entity_plural_label: Schedule Logs
+dentiman.schedulebundle.schedulelog.controller.saved.message: Schedulelogs saved
+dentiman.schedulebundle.schedulelog.owner.label: Owner

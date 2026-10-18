@@ -1,0 +1,27 @@
+services:
+  app.command.feed_import.update_tickers_command:
+    class: App\Command\FeedImport\UpdateTickersCommand
+    arguments:
+      - '@doctrine.orm.entity_manager'
+    tags:
+      - { name: console.command }
+  app.command.feed_import.level1.feed_level1yahoo_command:
+    class: App\Command\FeedImport\Level1\FeedLevel1YahooCommand
+    arguments: ['@doctrine.orm.entity_manager']
+    tags:
+      - { name: console.command }
+  app.command.feed_import.yahoo_quote_command:
+    class: App\Command\FeedImport\YahooQuoteCommand
+    arguments: ['@doctrine.orm.default_entity_manager']
+    tags:
+      - { name: console.command }
+  app.command.feed_import.yahoo_tech_command:
+    class: App\Command\FeedImport\YahooTechCommand
+    arguments: ['@doctrine.orm.default_entity_manager']
+    tags:
+      - { name: console.command }
+  app.command.feed_import.update_tmp_command:
+    class: App\Command\FeedImport\UpdateTmpCommand
+    arguments: ['@doctrine.orm.default_entity_manager']
+    tags:
+      - { name: console.command }

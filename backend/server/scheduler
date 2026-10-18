@@ -1,0 +1,1 @@
+* * * * * php /var/www/sw4/backend/bin/console app:cron >> /dev/null 2>&1

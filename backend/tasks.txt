@@ -1,0 +1,16 @@
+!! disable frontend
+
+sector to integer with filters and normalize data
+authorize token validate  like in voip  project
+chart route may be width authorizatio
+
+
+admin page make secure without auth
+
+reset password some time exception
+
+SELECT humhub.user.email, humhub.user_password.password,humhub.user_password.salt, humhub.sipcore_user_premium.expire
+from humhub.user LEFT JOIN humhub.user_password on user.id = user_password.user_id
+ LEFT JOIN humhub.sipcore_user_premium on user.id = sipcore_user_premium.id;
+
+ v=spf1 include:_spf.google.com mx ~all

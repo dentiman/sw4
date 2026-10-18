@@ -1,0 +1,16 @@
+{#{% macro tree(items) %}#}
+    {#{% import _self as m %}#}
+    {#{% if is_Array(items) %}#}
+        {#<ul>#}
+            {#{% for key,value in items %}#}
+
+                {#{% if is_Array(value) %}#}
+                    {#<li>{{ key }}:{{ m.tree(value) }}</li>#}
+                {#{% else %}#}
+                    {#<li>{{ key }}:{{ value }}</li>#}
+                {#{% endif %}#}
+
+            {#{% endfor %}#}
+        {#</ul>#}
+    {#{% endif %}#}
+{#{% endmacro %}#}
